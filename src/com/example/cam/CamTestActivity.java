@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 
 
-//二回目のcommit
+//３回目のcommit
 public class CamTestActivity extends Activity {
 	private static final String TAG = "CamTestActivity";
 	Preview preview;

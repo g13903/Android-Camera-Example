@@ -31,6 +31,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+
+
+//二回目のcommit
 public class CamTestActivity extends Activity {
 	private static final String TAG = "CamTestActivity";
 	Preview preview;

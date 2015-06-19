@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
@@ -33,34 +34,47 @@ import android.widget.Toast;
 
 
 
-//二回目のcommit
-public class CamTestActivity extends Activity {
+//androidアプリケーションはmainはない！
+//androidアプリケーションはあらかじめ指定した一つのアクティビティが最初に作成されることでアプリケーションが起動
+public class CamTestActivity extends Activity {//一つの画面につき一つのアクティビティクラスを定義
 	private static final String TAG = "CamTestActivity";
 	Preview preview;
-	Button buttonClick;
+	//Button buttonClick;
 	Camera camera;
 	Activity act;
 	Context ctx;
+	//Interface to global information about an application environment
+	//アプリの状態を受け渡すためcontextを渡している
+	//Object<-context<-ContextWraper<-ContextThemeWrapper<-Activityの継承関係
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		//onCreateはactivityに含まれる。superは大もとのactivityからひっぱっている
 		super.onCreate(savedInstanceState);
 		ctx = this;
 		act = this;
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//タイトルバーの非表示
+		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//フルスクリーン表示
 
 		setContentView(R.layout.main);
+		//アクティビティに部品を配置
+		//「R.layout.main」はsetContentViewメソッドの引数に指定されている
 
 		preview = new Preview(this, (SurfaceView)findViewById(R.id.surfaceView));
 		preview.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		((FrameLayout) findViewById(R.id.layout)).addView(preview);
 		preview.setKeepScreenOn(true);
+		//おそらく画面が落ちない機能？
 
 		preview.setOnClickListener(new OnClickListener() {
+			//setOnClickListner・・・クリックされた時の処理
 
 			@Override
 			public void onClick(View arg0) {
+				//クリック時の処理
 				camera.takePicture(shutterCallback, rawCallback, jpegCallback);
 			}
 		});
@@ -76,18 +90,18 @@ public class CamTestActivity extends Activity {
 		//			}
 		//		});
 		//		
-		//		buttonClick.setOnLongClickListener(new OnLongClickListener(){
-		//			@Override
-		//			public boolean onLongClick(View arg0) {
-		//				camera.autoFocus(new AutoFocusCallback(){
-		//					@Override
-		//					public void onAutoFocus(boolean arg0, Camera arg1) {
-		//						//camera.takePicture(shutterCallback, rawCallback, jpegCallback);
-		//					}
-		//				});
-		//				return true;
-		//			}
-		//		});
+		//	buttonClick.setOnLongClickListener(new OnLongClickListener(){
+			//	@Override
+				//	public boolean onLongClick(View arg0) {
+					//	camera.autoFocus(new AutoFocusCallback(){
+						//	@Override
+							//public void onAutoFocus(boolean arg0, Camera arg1) {
+								//camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+				//	}
+					//	});
+						//return true;
+				//	}
+	//			});
 	}
 
 	@Override

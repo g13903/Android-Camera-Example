@@ -76,6 +76,7 @@ public class CamTestActivity extends Activity {//一つの画面につき一つ�
 			public void onClick(View arg0) {
 				//クリック時の処理
 				camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+				//写真をとる
 			}
 		});
 
